@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
@@ -12,6 +13,13 @@ public class ARGuideController : MonoBehaviour
 
     private void Start()
     {
+       
+    }
+
+    public void SetImageAndCallAI(Sprite image)
+    {
+        if (hadImage == image) return; // 같은 이미지면 처리하지 않음
+        hadImage = image;
         StartCoroutine(ImageAndAsk());
     }
 
