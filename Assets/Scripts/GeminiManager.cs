@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 public class GeminiManager : MonoBehaviour
 {
     [Header("API 설정")]
-    [SerializeField] private string apiKey = "AIzaSyC3F2A8S9Gk4vEwuuRwQ71YuGbyWtcYPuM";
+    [SerializeField] private string apiKey = "AIzaSyDkC6pMSfZ_bk4aCJqmxUoCqTk-5QpRwEA";
     private const string API_URL =
         "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
 
@@ -54,6 +54,7 @@ public class GeminiManager : MonoBehaviour
             // 4. 응답 파싱: candidates[0].content.parts[0].text
             var response = JsonUtility.FromJson<GeminiResponse>(request.downloadHandler.text);
             string resultText = response.candidates[0].content.parts[0].text;
+            Debug.Log($"Gemini 응답: {resultText}");
             onResult?.Invoke(resultText);
         }
         else
