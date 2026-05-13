@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.XR;
 using UnityEngine.XR.ARFoundation;
 
@@ -12,6 +13,7 @@ public class ARTrackedImg : MonoBehaviour
     private Dictionary<string, GameObject> _prefabDic = new Dictionary<string, GameObject>();
     private List<ARTrackedImage> _trackedImg = new List<ARTrackedImage>();
     private List<float> _trackedTimer = new List<float>();
+    public Text trackedText;
 
     void Awake()
     {
@@ -59,14 +61,14 @@ public class ARTrackedImg : MonoBehaviour
 
     private void OnEnable()
     {
-        trackedImageManager.trackedImagesChanged += ImageChanged;
+        trackedImageManager.trackablesChanged.AddListener(ImageChanged);
     }
     private void OnDisable()
     {
-        trackedImageManager.trackedImagesChanged -= ImageChanged;
+        trackedImageManager.trackablesChanged.RemoveListener(ImageChanged);
     }
 
-    private void ImageChanged(ARTrackedImagesChangedEventArgs eventArgs)
+    private void ImageChanged(ARTrackablesChangedEventArgs<ARTrackedImage> eventArgs)
     {
         foreach (ARTrackedImage trackedImage in eventArgs.added)
         {
@@ -96,6 +98,9 @@ public class ARTrackedImg : MonoBehaviour
     private void UpdateImage(ARTrackedImage trackedImage)
     {
         string name = trackedImage.referenceImage.name;
+        //name = "Kimbab";
+        trackedText.text = name;
+
         GameObject tObj = _prefabDic[name];
         tObj.transform.position = trackedImage.transform.position;
         tObj.transform.rotation = trackedImage.transform.rotation;
