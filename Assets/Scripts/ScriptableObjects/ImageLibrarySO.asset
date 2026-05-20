@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fd539b9ed6e45049a95867fa76acc4c, type: 3}
+  m_Name: ImageLibrarySO
+  m_EditorClassIdentifier: Assembly-CSharp::ImageLibrarySO
+  imageEntries:
+  - imageName: Hamburger
+    texture: {fileID: 2800000, guid: b6dc9851a6e936c4db08239083895c00, type: 3}
+  - imageName: Kimbab
+    texture: {fileID: 2800000, guid: 5685010fa8d173b4eb32072bca8ad9fb, type: 3}

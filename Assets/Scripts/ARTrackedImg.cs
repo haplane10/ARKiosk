@@ -1,9 +1,10 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR;
 using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
 
 public class ARTrackedImg : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class ARTrackedImg : MonoBehaviour
     private List<ARTrackedImage> _trackedImg = new List<ARTrackedImage>();
     private List<float> _trackedTimer = new List<float>();
     public Text trackedText;
+    public Text debugText;
+    public XRReferenceImageLibrary library;
 
     void Awake()
     {
@@ -57,6 +60,11 @@ public class ARTrackedImg : MonoBehaviour
                 }
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            trackedText.text = "Space Key Pressed!";
+        }
     }
 
     private void OnEnable()
@@ -70,31 +78,38 @@ public class ARTrackedImg : MonoBehaviour
 
     private void ImageChanged(ARTrackablesChangedEventArgs<ARTrackedImage> eventArgs)
     {
-        foreach (ARTrackedImage trackedImage in eventArgs.added)
+        try
         {
-            if (!_trackedImg.Contains(trackedImage))
+            foreach (ARTrackedImage trackedImage in eventArgs.added)
             {
-                _trackedImg.Add(trackedImage);
-                _trackedTimer.Add(0);
+                if (!_trackedImg.Contains(trackedImage))
+                {
+                    _trackedImg.Add(trackedImage);
+                    _trackedTimer.Add(0);
+                }
             }
-        }
 
-        foreach (ARTrackedImage trackedImage in eventArgs.updated)
-        {
-            if (!_trackedImg.Contains(trackedImage))
+            foreach (ARTrackedImage trackedImage in eventArgs.updated)
             {
-                _trackedImg.Add(trackedImage);
-                _trackedTimer.Add(0);
+                if (!_trackedImg.Contains(trackedImage))
+                {
+                    _trackedImg.Add(trackedImage);
+                    _trackedTimer.Add(0);
+                }
+                else
+                {
+                    int num = _trackedImg.IndexOf(trackedImage);
+                    _trackedTimer[num] = 0;
+                }
+
+                UpdateImage(trackedImage);
             }
-            else
-            {
-                int num = _trackedImg.IndexOf(trackedImage);
-                _trackedTimer[num] = 0;
-            }
-         
-            UpdateImage(trackedImage);
-            ARGuideController.Instance.SetImageAndCallAI(trackedImage.referenceImage.texture);
         }
+        catch (System.Exception e)
+        {
+            debugText.text = $"인식오류 {e.Message}\n{e.StackTrace}";
+        }
+        
     }
 
     private void UpdateImage(ARTrackedImage trackedImage)
@@ -107,5 +122,20 @@ public class ARTrackedImg : MonoBehaviour
         tObj.transform.position = trackedImage.transform.position;
         tObj.transform.rotation = trackedImage.transform.rotation;
         tObj.SetActive(true);
+
+       
+        var refImage = GetReferenceImageByName(name);
+       // ARGuideController.Instance.SetImageAndCallAI(name);
+    }
+
+    XRReferenceImage? GetReferenceImageByName(string name)
+    {
+        for (int i = 0; i < library.count; i++)
+        {
+            var refImage = library[i];
+            if (refImage.name == name)
+                return refImage;
+        }
+        return null;
     }
 }

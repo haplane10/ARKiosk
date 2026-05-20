@@ -23,11 +23,21 @@ public class ARGuideController : MonoBehaviour
        
     }
 
-    public void SetImageAndCallAI(Texture2D image)
+    public void SetImageAndCallAI(string imageName)
     {
-        if (hadImage == image) return; // 같은 이미지면 처리하지 않음
-        hadImage = image;
-        debugText.text = $"새로운 이미지 인식: {image.name}";
+        if (string.IsNullOrEmpty(imageName))
+        {
+            debugText.text = "이미지가 null입니다.";
+            return;
+        }
+
+        if (hadImageName == imageName)
+        {
+            return;
+        }
+
+        hadImageName = imageName;
+        debugText.text = $"새로운 이미지 인식: {imageName}";
         StartCoroutine(ImageAndAsk());
     }
 
@@ -86,8 +96,9 @@ public class ARGuideController : MonoBehaviour
         Destroy(renderTexture);
     }
 
-    public Texture2D hadImage;
+    public string hadImageName;
     public string description = $"이 이미지를 한국어로 2~3문장으로 친절하게 설명해줘. ";
+    public ImageLibrarySO imageLibrarySO;
     private System.Collections.IEnumerator ImageAndAsk()
     {
         // 카메라 화면을 Texture2D로 캡처
@@ -108,8 +119,10 @@ public class ARGuideController : MonoBehaviour
         //RenderTexture.active = null;
 
         // Gemini에 설명 요청 — 프롬프트를 원하는 스타일로 수정 가능
-        string prompt = description + $"\n현재 인식된 오브젝트: {hadImage.name}";
-        debugText.text += $"\nGemini에 요청: {prompt}";
+        string prompt = description + $"\n현재 인식된 오브젝트: {hadImageName}";
+
+        var hadImage = imageLibrarySO.GetTextureByName(hadImageName);
+        debugText.text = $"{hadImage} \nGemini에 요청: {prompt}";
         geminiManager.AskGemini(hadImage, prompt, (resultText) =>
         {
             if (!string.IsNullOrEmpty(resultText))
