@@ -91,7 +91,9 @@ public class ARTrackedImg : MonoBehaviour
                 int num = _trackedImg.IndexOf(trackedImage);
                 _trackedTimer[num] = 0;
             }
+         
             UpdateImage(trackedImage);
+            ARGuideController.Instance.SetImageAndCallAI(trackedImage.referenceImage.texture);
         }
     }
 
