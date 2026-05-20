@@ -1326,6 +1326,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 541602052}
     m_Modifications:
+    - target: {fileID: 1836071569411088091, guid: 0aa3b81465702eb4bafa2a4552f5e323, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b522d1813ac456b458d84943339ab7e2, type: 2}
     - target: {fileID: 4413696408442114032, guid: 0aa3b81465702eb4bafa2a4552f5e323, type: 3}
       propertyPath: m_Name
       value: Hamburger
