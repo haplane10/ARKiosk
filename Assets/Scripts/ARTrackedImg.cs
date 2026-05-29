@@ -125,7 +125,7 @@ public class ARTrackedImg : MonoBehaviour
 
        
         var refImage = GetReferenceImageByName(name);
-       // ARGuideController.Instance.SetImageAndCallAI(name);
+        //ARGuideController.Instance.SetImageAndCallAI(name);
     }
 
     XRReferenceImage? GetReferenceImageByName(string name)

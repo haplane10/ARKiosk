@@ -359,6 +359,85 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &308756118
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 308756119}
+  - component: {fileID: 308756121}
+  - component: {fileID: 308756120}
+  m_Layer: 5
+  m_Name: AIText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &308756119
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 308756118}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2054226289}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: 0, y: -300}
+  m_SizeDelta: {x: 0, y: 200}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &308756120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 308756118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0.15899658, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 50
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 100
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: New Text
+--- !u!222 &308756121
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 308756118}
+  m_CullTransparentMesh: 1
 --- !u!1 &356797475
 GameObject:
   m_ObjectHideFlags: 0
@@ -392,10 +471,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.XR.ARFoundation::UnityEngine.XR.ARFoundation.ARTrackedImageManager
   <trackablesChanged>k__BackingField:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 439277855}
+        m_TargetAssemblyTypeName: ARGuideController, Assembly-CSharp
+        m_MethodName: CallAI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Hamburger
+          m_BoolArgument: 0
+        m_CallState: 2
   m_SerializedLibrary: {fileID: 11400000, guid: a7ed33aee903d8b43aa883cccf623524, type: 2}
   m_MaxNumberOfMovingImages: 1
-  m_TrackedImagePrefab: {fileID: 541602051}
+  m_TrackedImagePrefab: {fileID: 0}
 --- !u!114 &356797477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -403,7 +494,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 356797475}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7a8409233e53894f80c0c124fb2fd7a, type: 3}
   m_Name: 
@@ -467,7 +558,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &439277855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -483,11 +574,13 @@ MonoBehaviour:
   geminiManager: {fileID: 439277857}
   ttsManager: {fileID: 439277856}
   arCamera: {fileID: 1592261769}
+  trackedImageManager: {fileID: 356797476}
   debugText: {fileID: 1427992399}
+  AIText: {fileID: 308756120}
   hadImageName: 
   description: "\uC774 \uC0AC\uC9C4\uC5D0 \uB300\uD574 \uAC04\uB2E8\uD558\uAC8C 2\uC904\uB85C
     \uC124\uBA85\uD574\uC918"
-  imageLibrarySO: {fileID: 0}
+  imageLibrarySO: {fileID: 11400000, guid: 40a17c70c391a0845ab3afc8abe81840, type: 2}
 --- !u!114 &439277856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -512,7 +605,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c5367c80aa7c134bb462583e14a1297, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GeminiManager
-  apiKey: AIzaSyBVl05nMjPxtxmy5BdWEtmuD30m0qjFCeg
+  apiKey: 
 --- !u!4 &439277858
 Transform:
   m_ObjectHideFlags: 0
@@ -21601,6 +21694,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1427992398}
+  - {fileID: 308756119}
   m_Father: {fileID: 191580109}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}

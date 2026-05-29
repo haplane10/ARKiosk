@@ -10,17 +10,46 @@ public class ARGuideController : MonoBehaviour
     [SerializeField] private GeminiManager geminiManager;
     [SerializeField] private AndroidTTSManager ttsManager;
     [SerializeField] private Camera arCamera;
+    [SerializeField] private ARTrackedImageManager trackedImageManager;
+
     public Text debugText;
+    public Text AIText;
 
     private bool isProcessing = false;
 
     public void Awake()
     {
-            Instance = this;
+        Instance = this;
     }
+
     private void Start()
     {
        
+    }
+
+    public void CallAI()
+    {
+#if UNITY_EDITOR
+        // 에디터/시뮬레이터 환경
+        var trackedImage = trackedImageManager.trackedImagePrefab;
+        if (trackedImage == null)
+        {
+            debugText.text = "인식된 이미지가 없습니다.";
+            return;
+        }
+        SetImageAndCallAI(trackedImage.name);
+#else
+    // 실기기 빌드
+    foreach (var trackedImage in trackedImageManager.trackables)
+    {
+        if (trackedImage.trackingState == TrackingState.Tracking)
+        {
+            SetImageAndCallAI(trackedImage.referenceImage.name);
+            return;
+        }
+    }
+    debugText.text = "인식된 이미지가 없습니다.";
+#endif
     }
 
     public void SetImageAndCallAI(string imageName)
@@ -33,6 +62,7 @@ public class ARGuideController : MonoBehaviour
 
         if (hadImageName == imageName)
         {
+           // debugText.text = "동일한 이미지 입니다";
             return;
         }
 
@@ -128,7 +158,12 @@ public class ARGuideController : MonoBehaviour
             if (!string.IsNullOrEmpty(resultText))
             {
                 // TTS로 읽기
+                AIText.text = resultText;
                 ttsManager.Speak(resultText);
+            }
+            else
+            {
+                AIText.text = "Gemini로부터 응답이 없습니다.";
             }
             isProcessing = false;
             //Destroy(texture);
